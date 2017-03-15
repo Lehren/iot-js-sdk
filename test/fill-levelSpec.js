@@ -45,7 +45,7 @@ describe('FillLevel', () => {
     spyOn(conn, 'get').and.callThrough();
     spyOn(window, 'fetch').and.returnValue(Promise.resolve(fakeResponse));
 
-    fillHandler.getFillLevel("1")
+    fillHandler.getFillLevel('1')
       .then(result => {
         expect(result).toEqual(content);
         expect(conn.get).toHaveBeenCalledTimes(1);

@@ -1,14 +1,15 @@
 export default class Connection {
-  constructor(url) {
-    if (typeof url !== 'string') {
-      throw new Error('url parameter of type "string" is required');
-    }
-    this.url = url;
+  constructor(options) {
+    this.url = options.API_URL;
+    this.apiKey = options.API_KEY;
   }
 
   get(endpoint) {
+    const headers = new Headers();
+    headers.append('Authorization', this.apiKey);
     const options = {
-      method: 'GET'
+      method: 'GET',
+      headers
     };
 
     return fetch(this.url + endpoint, options)
@@ -16,9 +17,12 @@ export default class Connection {
   }
 
   post(data, endpoint) {
+    const headers = new Headers();
+    headers.append('Authorization', this.apiKey);
     const options = {
       method: 'POST',
-      body: data
+      body: data,
+      headers
     };
 
     return fetch(this.url + endpoint, options)

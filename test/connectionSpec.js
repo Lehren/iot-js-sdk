@@ -1,16 +1,11 @@
 import Connection from '../src/connection/connection';
 
 describe('Connection', () => {
-  it('should not construct with invalid values', () => {
-    [0, {}, [], true, false, null, undefined].map(v => {
-      expect(() => {
-        new Connection(v);
-      }).toThrowError('url parameter of type "string" is required');
-    });
-  });
-
   it('should construct with a valid value', () => {
-    const conn = new Connection('url');
+    const options = {
+      API_URL: 'url'
+    };
+    const conn = new Connection(options);
     expect(conn.url).toBe('url');
   });
 
@@ -26,8 +21,11 @@ describe('Connection', () => {
     });
     spyOn(window, 'fetch').and.returnValue(Promise.resolve(fakeResponse));
     const url = '127.0.0.1';
+    const options = {
+      API_URL: url
+    };
     const endpoint = '/containers';
-    const conn = new Connection(url);
+    const conn = new Connection(options);
     conn.get(endpoint)
       .then(result => {
         const request = window.fetch.calls.mostRecent().args;
@@ -54,8 +52,11 @@ describe('Connection', () => {
     };
     spyOn(window, 'fetch').and.returnValue(Promise.resolve(fakeResponse));
     const url = '127.0.0.1';
+    const options = {
+      API_URL: url
+    };
     const endpoint = '/containers';
-    const conn = new Connection(url);
+    const conn = new Connection(options);
     conn.post(postData, endpoint)
       .then(result => {
         const request = window.fetch.calls.mostRecent().args;

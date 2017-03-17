@@ -9,7 +9,7 @@ describe('Connection', () => {
     expect(conn.url).toBe('url');
   });
 
-  it('it should get the correct url', done => {
+  it('it should send a get request to the correct url with the correct headers', done => {
     const content = {
       signature: 'sfcgywesgf3g8'
     };
@@ -39,7 +39,7 @@ describe('Connection', () => {
       .then(done);
   });
 
-  it('should post to the correct url', done => {
+  it('should send a post request to the correct url with the correct headers', done => {
     const content = {
       signature: 'sfcgywesgf3g8'
     };

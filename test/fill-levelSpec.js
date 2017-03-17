@@ -54,4 +54,38 @@ describe('FillLevel', () => {
       .catch(fail)
       .then(done);
   });
+
+  it('should get the fill levels of multiple containers', done => {
+    const conn = new Connection('url');
+    const fillHandler = new FillLevelHandler(conn);
+    const content =
+      [
+        {
+          id: '1',
+          fillLevel: '50'
+        },
+        {
+          id: '2',
+          fillLevel: '40'
+        }
+      ];
+
+    const fakeResponse = new Response(JSON.stringify(content), {
+      status: 200,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8'
+      }
+    });
+    spyOn(conn, 'get').and.callThrough();
+    spyOn(window, 'fetch').and.returnValue(Promise.resolve(fakeResponse));
+
+    fillHandler.getFillLevels()
+      .then(result => {
+        expect(result).toEqual(content);
+        expect(conn.get).toHaveBeenCalledTimes(1);
+        expect(conn.get).toHaveBeenCalledWith('/containers/filllevel');
+      })
+      .catch(fail)
+      .then(done);
+  });
 });

@@ -18,4 +18,16 @@ export default class FillLevelController {
         fillLevel: data.fillLevel
       }));
   }
+
+  getFillLevels() {
+    const result = [];
+    return this.connection.get('/containers/filllevel')
+      .then(data => data.map(datum => {
+        result.push({
+          id: datum.id,
+          fillLevel: datum.fillLevel
+        });
+      }))
+      .then(() => result);
+  }
 }

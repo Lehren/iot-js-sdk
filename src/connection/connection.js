@@ -6,7 +6,7 @@ export default class Connection {
 
   get(endpoint) {
     const headers = new Headers();
-    headers.append('Authorization', this.apiKey);
+    headers.append('API_KEY', this.apiKey);
     const options = {
       method: 'GET',
       headers
@@ -18,7 +18,7 @@ export default class Connection {
 
   post(data, endpoint) {
     const headers = new Headers();
-    headers.append('Authorization', this.apiKey);
+    headers.append('API_KEY', this.apiKey);
     const options = {
       method: 'POST',
       body: data,

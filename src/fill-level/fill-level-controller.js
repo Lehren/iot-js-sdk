@@ -12,6 +12,10 @@ export default class FillLevelController {
     if (typeof id !== 'string') {
       return Promise.reject(new Error('id parameter of type "string" is required'));
     }
-    return this.connection.get('/containers/filllevel/' + id);
+    return this.connection.get('/containers/filllevel/' + id)
+      .then(data => ({
+        id: data.id,
+        fillLevel: data.fillLevel
+      }));
   }
 }

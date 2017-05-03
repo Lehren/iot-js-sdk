@@ -22,9 +22,9 @@ export default class ContainerController {
       }));
   }
 
-  getContainers() {
+  getContainersNearMe(latitude, longitude) {
     const result = [];
-    return this.connection.get('/containers/container')
+    return this.connection.get('/containers/container/nearme/' + latitude + '/' + longitude)
       .then(data => data.map(datum => {
         result.push({
           id: datum.id,

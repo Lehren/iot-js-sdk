@@ -58,7 +58,7 @@ describe('Container', () => {
       .then(done);
   });
 
-  it('should get multiple containers', done => {
+  it('should get multiple containers near me', done => {
     const conn = new Connection('url');
     const containerHandler = new ContainerHandler(conn);
     const content =
@@ -88,11 +88,11 @@ describe('Container', () => {
     spyOn(conn, 'get').and.callThrough();
     spyOn(window, 'fetch').and.returnValue(Promise.resolve(fakeResponse));
 
-    containerHandler.getContainers()
+    containerHandler.getContainersNearMe('32,235462', '43,564322')
       .then(result => {
         expect(result).toEqual(content);
         expect(conn.get).toHaveBeenCalledTimes(1);
-        expect(conn.get).toHaveBeenCalledWith('/containers/container');
+        expect(conn.get).toHaveBeenCalledWith('/containers/container/nearme/32,235462/43,564322');
       })
       .catch(fail)
       .then(done);

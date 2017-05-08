@@ -12,7 +12,7 @@ export default class ContainerController {
     if (typeof id !== 'string') {
       return Promise.reject(new Error('id parameter of type "string" is required'));
     }
-    return this.connection.get('/containers/container/' + id)
+    return this.connection.get('/containers/containers/' + id)
       .then(data => ({
         id: data.id,
         fillLevel: data.fillLevel,
@@ -24,7 +24,7 @@ export default class ContainerController {
 
   getContainersNearMe(latitude, longitude) {
     const result = [];
-    return this.connection.get('/containers/container/nearme/' + latitude + '/' + longitude)
+    return this.connection.get('/containers/containers/nearme/' + latitude + '/' + longitude)
       .then(data => data.map(datum => {
         result.push({
           id: datum.id,

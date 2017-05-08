@@ -52,7 +52,7 @@ describe('Container', () => {
       .then(result => {
         expect(result).toEqual(content);
         expect(conn.get).toHaveBeenCalledTimes(1);
-        expect(conn.get).toHaveBeenCalledWith('/containers/containers/1');
+        expect(conn.get).toHaveBeenCalledWith('/containers/1');
       })
       .catch(fail)
       .then(done);
@@ -92,7 +92,7 @@ describe('Container', () => {
       .then(result => {
         expect(result).toEqual(content);
         expect(conn.get).toHaveBeenCalledTimes(1);
-        expect(conn.get).toHaveBeenCalledWith('/containers/containers/nearme/32,235462/43,564322');
+        expect(conn.get).toHaveBeenCalledWith('/containers/nearme/32,235462/43,564322');
       })
       .catch(fail)
       .then(done);

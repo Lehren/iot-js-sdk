@@ -36,4 +36,19 @@ export default class ContainerController {
       }))
       .then(() => result);
   }
+
+  subscribeToContainer(containerId, email) {
+    if (typeof containerId !== 'string') {
+      return Promise.reject(new Error('containerId parameter of type "string" is required'));
+    }
+    if (typeof email !== 'string') {
+      return Promise.reject(new Error('email parameter of type "string" is required'));
+    }
+    const data =
+      {
+        id: containerId,
+        email
+      };
+    return this.connection.post(data, '/containers/subscribe');
+  }
 }

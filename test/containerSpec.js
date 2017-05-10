@@ -97,4 +97,57 @@ describe('Container', () => {
       .catch(fail)
       .then(done);
   });
+
+  it('should not post with invalid containerId', done => {
+    const conn = new Connection('url');
+    const controller = new ContainerHandler(conn);
+    [0, {}, [], true, false, null, undefined].map(v => {
+      controller.subscribeToContainer(v)
+        .then(fail)
+        .catch(error => {
+          expect(error.message).toEqual('containerId parameter of type "string" is required');
+        })
+        .then(done);
+    });
+  });
+
+  it('should not post with invalid email', done => {
+    const conn = new Connection('url');
+    const controller = new ContainerHandler(conn);
+    [0, {}, [], true, false, null, undefined].map(v => {
+      controller.subscribeToContainer('1', v)
+        .then(fail)
+        .catch(error => {
+          expect(error.message).toEqual('email parameter of type "string" is required');
+        })
+        .then(done);
+    });
+  });
+
+  it('should post through API', done => {
+    const conn = new Connection('url');
+    const controller = new ContainerHandler(conn);
+    const expected =
+      {
+        id: '1',
+        email: 'email@email.com'
+      };
+    const fakeResponse = new Response(JSON.stringify({}), {
+      status: 201,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8'
+      }
+    });
+    spyOn(window, 'fetch').and.returnValue(Promise.resolve(fakeResponse));
+
+    controller.subscribeToContainer('1', 'email@email.com')
+      .then(() => {
+        const request = window.fetch.calls.mostRecent().args;
+        expect(request[1].method).toBe('POST');
+        expect(request[1].body).toEqual(expected);
+      })
+      .catch(error => {
+        fail('No error should be thrown : ' + error);
+      }).then(done);
+  });
 });

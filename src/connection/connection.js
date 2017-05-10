@@ -18,6 +18,8 @@ export default class Connection {
 
   post(data, endpoint) {
     const headers = new Headers();
+    headers.append('Content-Type',
+      'application/json; charset=utf-8');
     headers.append('API_KEY', this.apiKey);
     const options = {
       method: 'POST',

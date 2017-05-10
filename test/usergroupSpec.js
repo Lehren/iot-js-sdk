@@ -45,7 +45,11 @@ describe('Container', () => {
   it('should post through API', done => {
     const conn = new Connection('url');
     const controller = new UsergroupHandler(conn);
-    const expected = {email: 'email@email.com'};
+    const expected =
+      {
+        id: '1',
+        email: 'email@email.com'
+      };
     const fakeResponse = new Response(JSON.stringify({}), {
       status: 201,
       headers: {

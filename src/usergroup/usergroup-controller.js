@@ -15,7 +15,11 @@ export default class UsergroupController {
     if (typeof email !== 'string') {
       return Promise.reject(new Error('email parameter of type "string" is required'));
     }
-    const data = {email};
-    return this.connection.post(data, '/containers/usergroup/' + containerId);
+    const data =
+      {
+        id: containerId,
+        email
+      };
+    return this.connection.post(data, '/containers/usergroup');
   }
 }

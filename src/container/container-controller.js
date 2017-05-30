@@ -37,7 +37,7 @@ export default class ContainerController {
       .then(() => result);
   }
 
-  getAllContainers(){
+  getAllContainers() {
     const result = [];
     return this.connection.get('/containers')
       .then(data => data.map(datum => {

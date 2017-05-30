@@ -37,6 +37,21 @@ export default class ContainerController {
       .then(() => result);
   }
 
+  getAllContainers(){
+    const result = [];
+    return this.connection.get('/containers')
+      .then(data => data.map(datum => {
+        result.push({
+          id: datum.id,
+          fillLevel: datum.fillLevel,
+          latitude: datum.latitude,
+          longitude: datum.longitude,
+          lastUpdated: datum.lastUpdated
+        });
+      }))
+      .then(() => result);
+  }
+
   subscribeToContainer(containerId, email) {
     if (typeof containerId !== 'string') {
       return Promise.reject(new Error('containerId parameter of type "string" is required'));

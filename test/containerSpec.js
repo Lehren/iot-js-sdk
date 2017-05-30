@@ -98,6 +98,46 @@ describe('Container', () => {
       .then(done);
   });
 
+  it('should get all containers', done => {
+    const conn = new Connection('url');
+    const containerHandler = new ContainerHandler(conn);
+    const content =
+      [
+        {
+          id: '1',
+          fillLevel: '50',
+          latitude: '32.4375838',
+          longitude: '53.353452',
+          lastUpdated: '2017-05-03T09:41:23+00:00'
+        },
+        {
+          id: '2',
+          fillLevel: '34',
+          latitude: '87.453423',
+          longitude: '21.346552',
+          lastUpdated: '2017-05-03T09:41:23+00:00'
+        }
+      ];
+
+    const fakeResponse = new Response(JSON.stringify(content), {
+      status: 200,
+      headers: {
+        'Content-type': 'application/json; charset=utf-8'
+      }
+    });
+    spyOn(conn, 'get').and.callThrough();
+    spyOn(window, 'fetch').and.returnValue(Promise.resolve(fakeResponse));
+
+    containerHandler.getAllContainers()
+      .then(result => {
+        expect(result).toEqual(content);
+        expect(conn.get).toHaveBeenCalledTimes(1);
+        expect(conn.get).toHaveBeenCalledWith('/containers');
+      })
+      .catch(fail)
+      .then(done);
+  });
+
   it('should not post with invalid containerId', done => {
     const conn = new Connection('url');
     const controller = new ContainerHandler(conn);

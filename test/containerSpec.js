@@ -184,7 +184,7 @@ describe('Container', () => {
       .then(() => {
         const request = window.fetch.calls.mostRecent().args;
         expect(request[1].method).toBe('POST');
-        expect(request[1].body).toEqual(expected);
+        expect(request[1].body).toEqual(JSON.stringify(expected));
       })
       .catch(error => {
         fail('No error should be thrown : ' + error);

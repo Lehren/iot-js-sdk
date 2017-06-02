@@ -64,6 +64,6 @@ export default class ContainerController {
         id: containerId,
         email
       };
-    return this.connection.post(data, '/containers/subscribe');
+    return this.connection.post(JSON.stringify(data), '/containers/subscribe');
   }
 }
